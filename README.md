@@ -9,7 +9,7 @@ Euros (EUR) and the conversion rates to all currencies provided by the API
 * Upload the CSV file to a database (any local database will be sufficient, e.g. SQLLite,
 MySQL, etc.)
 
-2.1 Additional considerations
+Additional considerations
 
 Please include consideration for the following:
 
