@@ -19,3 +19,7 @@ Please include consideration for the following:
 * How to handle API keys/secrets if the API were to require such things
 * Consideration for how the code would perform with much higher volumes of data (e.g.
 100,000 company records)
+
+Files:
+* api_code.py = Main Python Script
+* test.py = Test for code 
