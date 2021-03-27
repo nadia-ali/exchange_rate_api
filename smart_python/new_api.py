@@ -1,4 +1,3 @@
-"""base file. once complete, make changes to main file, then remove other folders"""
 # 3rd party
 import requests
 import pandas as pd
