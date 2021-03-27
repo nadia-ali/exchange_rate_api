@@ -24,7 +24,7 @@ def handling_error_codes():
 
 
 def get_rates():
-    # Querying the api for exchange rates for the period 01/01/2018 - 01/01/2021
+    # Querying the api for specific exchange rates for the period 01/01/2018 - 01/01/2021
     rates = requests.get("https://api.exchangeratesapi.io/"
                          "history?start_at=2018-01-01&end_at=2021-01-01&symbols=GBP,USD,EUR&base=DKK")
     data = rates.text
