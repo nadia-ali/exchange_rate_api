@@ -1,14 +1,18 @@
 # 3rd party
 import requests
+import pandas as pd
+
 # in-built
 import json
+import sqlite3
+from sqlite3 import Error
+import csv
 
-api_url = 'https://api.exchangeratesapi.io/latest'
-response = requests.get(api_url)
 
-
-def handling_error_codes(r):
+def handling_error_codes():
     # Error handling if the API returns an error
+    api_url = 'https://api.exchangeratesapi.io/latest'
+    r = requests.get(api_url)
     if r.status_code == 200:
         print('Success!')
     elif r.status_code == 403:
@@ -19,29 +23,22 @@ def handling_error_codes(r):
         print('Error, response code is: {}'.format(r.status_code))
 
 
-def query_api():
+def get_rates():
     # Querying the api for exchange rates for the period 01/01/2018 - 01/01/2021
-    exchange_rates = requests.get('https://api.exchangeratesapi.io/'
-                                  'history?start_at=2018-01-01&end_at=2021-01-01&base=DKK')
-    data = exchange_rates.text
+    rates = requests.get("https://api.exchangeratesapi.io/"
+                         "history?start_at=2018-01-01&end_at=2021-01-01&symbols=GBP,USD,EUR&base=DKK")
+    data = rates.text
     parsed = json.loads(data)
-    return parsed
+    parsed_rates = parsed["rates"]
+    return parsed_rates
 
 
-def exchange_currency():
-    # Extract exchange and conversion rates
-    parsed_data = query_api()
-    rates = parsed_data["rates"]
-    for key, val in rates.items():
-        print("Date: ", key, "GBP Rate: ", val['GBP'])
-        print("Date: ", key, "USD Rate: ", val['USD'])
-        print("Date: ", key, "EUR Rate: ", val['EUR'])
-
-    # Extract conversion rates to all currencies
-
-
-# def output_to_csv():
+def output_to_csv():
     # Writing data to CSV file
+    csv_data = get_rates()
+    data_frame = pd.DataFrame(csv_data)
+    csv_file = data_frame.to_csv('./rates.csv')
+    return csv_file
 
 
 # def csv_to_db():
@@ -49,7 +46,8 @@ def exchange_currency():
 
 
 if __name__ == "__main__":
-    handling_error_codes(response)
-    query_api()
-    exchange_currency()
-    # conversion_rates()
+    handling_error_codes()
+    get_rates()
+    output_to_csv()
+    csv_to_db()
+
