@@ -6,7 +6,6 @@ import pandas as pd
 import json
 import sqlite3
 from sqlite3 import Error
-# import csv
 
 
 def handling_error_codes():
