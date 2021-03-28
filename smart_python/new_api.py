@@ -36,6 +36,7 @@ def get_rates():
 def output_to_csv():
     # Writing data to CSV file
     csv_data = get_rates()
+    print(csv_data)
     data_frame = pd.DataFrame(csv_data)
     csv_file = data_frame.to_csv('./rates.csv')
     return csv_file
@@ -55,13 +56,15 @@ def db_connection(db_file):
 
 
 def create_table(db_file, sql):
-    # Create table to store data
+    # Create table to store data.
     connection = db_connection(db_file)
     cur = connection.cursor()
+    sql = """ CREATE TABLE IF NOT EXISTS exchange_rates (
+                            date_created varchar PRIMARY KEY
+                            currency varchar
+                            rate integer); """
     cur.execute(sql)
     connection.commit()
-    connection.close()
-
     return None
 
 
@@ -83,6 +86,6 @@ if __name__ == "__main__":
     get_rates()
     output_to_csv()
     db_connection("")
-    create_table("", sql="")
+    create_table(db_file="", sql="")
     insert_data("")
 
