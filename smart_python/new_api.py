@@ -54,54 +54,35 @@ def db_connection(db_file):
     return conn
 
 
-def csv_to_db(db_file):
-    # Upload CSV to database
+def create_table(db_file, sql):
+    # Create table to store data
     connection = db_connection(db_file)
     cur = connection.cursor()
-    cur.execute('''CREATE TABLE rates
-                   (date text, currency text, rate text)''')
+    cur.execute(sql)
     connection.commit()
     connection.close()
 
-
-def create_table(create_table_sql=None):
-    # create database table which will store data
-    try:
-        c = db_connection.cursor()
-        c.execute(create_table_sql)
-    except Error as e:
-        print(e)
-
-# 
-# def insert_data():
-#     Insert csv file data to table within database
-
-# def query_api():
-#
-#     exchange_rates = requests.get('https://api.exchangeratesapi.io/'
-#                                   'history?start_at=2018-01-01&end_at=2021-01-01&base=DKK')
-#     data = exchange_rates.text
-#     parsed = json.loads(data)
-#     return parsed
+    return None
 
 
-# def exchange_currency():
-#     # Extract exchange and conversion rates
-#     parsed_data = query_api()
-#     rates = parsed_data["rates"]
-#     data = ""
-#     for key, val in rates.items():
-#         print("Date: ", key, "GBP Rate: ", val['GBP'])
-#         print("Date: ", key, "USD Rate: ", val['USD'])
-#         print("Date: ", key, "EUR Rate: ", val['EUR'])
+def insert_data(db_file):
+    # Upload CSV to database
+    sql = ''' INSERT INTO exchange_rates(date_created,currency,rate)
+                  VALUES(?,?,?) '''
+    connection = db_connection(db_file)
+    csv_file = output_to_csv()
+    cur = connection.cursor()
+    cur.execute(sql, csv_file)
+    connection.commit()
+
+    return None
 
 
 if __name__ == "__main__":
     handling_error_codes()
-    # query_api()
-    # exchange_currency()
     get_rates()
     output_to_csv()
     db_connection("")
-    csv_to_db("")
+    create_table("", sql="")
+    insert_data("")
 
