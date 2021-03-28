@@ -54,13 +54,13 @@ def db_connection(db_file):
     return conn
 
 
-def create_table(db_file, sql):
+def create_table(db_file):
     # Create table to store data.
     connection = db_connection(db_file)
     cur = connection.cursor()
     sql = """ CREATE TABLE IF NOT EXISTS exchange_rates (
-                            date_created varchar PRIMARY KEY
-                            currency varchar
+                            date_created varchar PRIMARY KEY,
+                            currency varchar,
                             rate integer); """
     cur.execute(sql)
     connection.commit()
@@ -69,7 +69,7 @@ def create_table(db_file, sql):
 
 def insert_data(db_file):
     # Upload CSV to database
-    sql = ''' INSERT INTO exchange_rates(date_created,currency,rate)
+    sql = ''' INSERT INTO exchange_rates (date_created,currency,rate)
                   VALUES(?,?,?) '''
     connection = db_connection(db_file)
     csv_file = output_to_csv()
@@ -85,6 +85,6 @@ if __name__ == "__main__":
     get_rates()
     output_to_csv()
     db_connection("")
-    create_table(db_file="", sql="")
+    create_table(db_file="")
     insert_data("")
 
