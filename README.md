@@ -21,5 +21,5 @@ Please include consideration for the following:
 100,000 company records)
 
 Files:
-* api_code.py = Main Python Script
-* test.py = Test for code 
+* new_api.py = Main Python Script
+* tests.py = Test for code 
