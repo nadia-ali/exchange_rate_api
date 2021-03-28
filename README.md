@@ -23,3 +23,6 @@ Please include consideration for the following:
 Files:
 * new_api.py = Main Python Script
 * tests.py = Test for code 
+
+Note:
+* Some strings are empty as they should contain file paths to local files 
